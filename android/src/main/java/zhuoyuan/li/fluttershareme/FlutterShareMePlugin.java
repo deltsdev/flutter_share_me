@@ -365,7 +365,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
             } else {
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(backgroundUri, MEDIA_TYPE_JPEG);
+                intent.setDataAndType(backgroundUri, "image/*");
                 instagramIntent.putExtra("interactive_asset_uri", fileUri);
             }
 
