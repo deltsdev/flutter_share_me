@@ -364,7 +364,8 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 instagramIntent.putExtra("top_background_color", "#8FA5F4");
                 instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
             } else {
-                instagramIntent.setData(backgroundUri);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(backgroundUri, MEDIA_TYPE_JPEG);
                 instagramIntent.putExtra("interactive_asset_uri", fileUri);
             }
 
@@ -374,7 +375,6 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 instagramIntent.setType("video/*");
 
             activity.grantUriPermission("com.instagram.android", fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            activity.grantUriPermission("com.instagram.android", backgroundUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             try {
                 activity.startActivity(instagramIntent);
