@@ -385,6 +385,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 instagramIntent.setType("video/*");
 
             activity.grantUriPermission("com.instagram.android", backgroundUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.grantUriPermission("com.instagram.android", file, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             try {
                 activity.startActivity(instagramIntent);
