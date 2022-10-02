@@ -360,7 +360,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
 
             //Use only sticker asset if theres no backgroiundurl provided
             if(backgroundUrl.equals("")) {
-                instagramIntent.putExtra("interactive_asset_uri", fileUri);
+                instagramIntent.putExtra("interactive_asset_uri", backgroundUri);
                 instagramIntent.putExtra("top_background_color", "#8FA5F4");
                 instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
             } else {
@@ -374,7 +374,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
             else if(fileType.equals("video"))
                 instagramIntent.setType("video/*");
 
-            activity.grantUriPermission("com.instagram.android", fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.grantUriPermission("com.instagram.android", backgroundUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             try {
                 activity.startActivity(instagramIntent);
