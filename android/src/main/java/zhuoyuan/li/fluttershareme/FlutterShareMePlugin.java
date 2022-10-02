@@ -92,7 +92,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
      */
     @Override
     public void onMethodCall(MethodCall call, @NonNull Result result) {
-        String url, backgroundUrl, msg, fileType;
+        String url, topColor, bottomColor,  backgroundUrl, msg, fileType;
         switch (call.method) {
             case _methodFaceBook:
                 url = call.argument("url");
@@ -130,6 +130,8 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 break;
             case _methodInstagramShare:
                 msg = call.argument("url");
+                topColor = call.argument("topColor");
+                bottomColor = call.argument("bottomColor");
                 backgroundUrl = call.argument("backgroundUrl");
                 fileType = call.argument("fileType");
                 shareInstagramStory(msg, backgroundUrl, fileType, result);
@@ -341,11 +343,13 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
      * share to instagram
      *
      * @param url      local file path
+     * @param topColor optional top color
+     * @param bottomColor optional bottom color
      * @param backgroundUrl optional background image url path
      * @param fileType type of file to share (image or video)
      * @param result   flutterResult
      */
-    private void shareInstagramStory(String url, String backgroundUrl, String fileType, Result result) {
+    private void shareInstagramStory(String url, String topColor, String bottomColor, String backgroundUrl, String fileType, Result result) {
         if (instagramInstalled()) {
             File file = new File(url);
             File backgroundFile = new File(backgroundUrl);
@@ -378,8 +382,8 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 // instagramIntent.setData(backgroundUri);
                 // instagramIntent.putExtra("interactive_asset_uri", fileUri);
                 instagramIntent.putExtra("interactive_asset_uri", backgroundUri);
-                instagramIntent.putExtra("top_background_color", "#8FA5F4");
-                instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
+                instagramIntent.putExtra("top_background_color", topColor);
+                instagramIntent.putExtra("bottom_background_color", bottomColor);
             }
 
             if(fileType.equals("image"))

@@ -163,13 +163,19 @@ class FlutterShareMe {
   Future<String?> shareToInstagram({
     required String filePath,
     String? backgroundFilePath = '',
+    String? topColor = '#8FA5F4', //Default value
+    String? bottomColor = '#9C1EE9', //Default value
     FileType fileType = FileType.image,
   }) async {
     final Map<String, dynamic> arguments = <String, dynamic>{};
     arguments.putIfAbsent('url', () => filePath);
+    arguments.putIfAbsent('topColor', () => topColor);
+    arguments.putIfAbsent('bottomColor', () => bottomColor);
+
     if(backgroundFilePath != null || backgroundFilePath!.isEmpty) {
       arguments.putIfAbsent('backgroundUrl', () => backgroundFilePath);
     }
+
     if (fileType == FileType.image) {
       arguments.putIfAbsent('fileType', () => 'image');
     } else {
