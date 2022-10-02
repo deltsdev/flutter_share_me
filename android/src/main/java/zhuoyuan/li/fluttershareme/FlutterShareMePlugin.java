@@ -92,7 +92,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
      */
     @Override
     public void onMethodCall(MethodCall call, @NonNull Result result) {
-        String url, msg, fileType;
+        String url, backgroundUrl, msg, fileType;
         switch (call.method) {
             case _methodFaceBook:
                 url = call.argument("url");
@@ -130,8 +130,9 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 break;
             case _methodInstagramShare:
                 msg = call.argument("url");
+                backgroundUrl = call.argument("backgroundUrl");
                 fileType = call.argument("fileType");
-                shareInstagramStory(msg, fileType, result);
+                shareInstagramStory(msg, backgroundUrl, fileType, result);
                 break;
             case _methodTelegramShare:
                 msg = call.argument("msg");
@@ -340,26 +341,40 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
      * share to instagram
      *
      * @param url      local file path
+     * @param backgroundUrl optional background image url path
      * @param fileType type of file to share (image or video)
      * @param result   flutterResult
      */
-    private void shareInstagramStory(String url, String fileType, Result result) {
+    private void shareInstagramStory(String url, String backgroundUrl, String fileType, Result result) {
         if (instagramInstalled()) {
             File file = new File(url);
+            File backgroundFile = new File(backgroundUrl);
+
             Uri fileUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".provider", file);
+            Uri backgroundUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".provider", backgroundFile);
 
             //WILL EDIT THIS SPECIFICALLY FOR MY APP
 
             Intent instagramIntent = new Intent("com.instagram.share.ADD_TO_STORY");
             instagramIntent.putExtra("source_application", "com.example.who_u");
-            instagramIntent.putExtra("top_background_color", "#8FA5F4");
-            instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
+
+            //Use only sticker asset if theres no backgroiundurl provided
+            if(backgroundUrl.equals("")) {
+                instagramIntent.putExtra("interactive_asset_uri", fileUri);
+                instagramIntent.putExtra("top_background_color", "#8FA5F4");
+                instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
+            } else {
+                instagramIntent.setData(backgroundUri);
+                instagramIntent.putExtra("interactive_asset_uri", fileUri);
+            }
+
             if(fileType.equals("image"))
                 instagramIntent.setType("image/*");
             else if(fileType.equals("video"))
                 instagramIntent.setType("video/*");
-            instagramIntent.putExtra("interactive_asset_uri", fileUri);
+
             activity.grantUriPermission("com.instagram.android", fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
             try {
                 activity.startActivity(instagramIntent);
                 result.success("Success");
