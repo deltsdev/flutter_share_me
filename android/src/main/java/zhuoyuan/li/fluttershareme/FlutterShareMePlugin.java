@@ -370,10 +370,9 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
 
             //Use only sticker asset if theres no backgroiundurl provided
             if(backgroundUrl.equals("")) {
-                instagramIntent.setData(fileUri);
                 instagramIntent.putExtra("interactive_asset_uri", fileUri);
-                // instagramIntent.putExtra("top_background_color", "#8FA5F4");
-                // instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
+                instagramIntent.putExtra("top_background_color", "#8FA5F4");
+                instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
             } else {
                 // instagramIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 // instagramIntent.setData(backgroundUri);
