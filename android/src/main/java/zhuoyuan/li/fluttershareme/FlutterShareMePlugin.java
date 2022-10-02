@@ -347,6 +347,13 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
      */
     private void shareInstagramStory(String url, String backgroundUrl, String fileType, Result result) {
         if (instagramInstalled()) {
+
+            List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
             File file = new File(url);
             File backgroundFile = new File(backgroundUrl);
 
