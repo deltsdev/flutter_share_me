@@ -348,13 +348,18 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
             File file = new File(url);
             Uri fileUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".provider", file);
 
-            Intent instagramIntent = new Intent(Intent.ACTION_SEND);
+            //WILL EDIT THIS SPECIFICALLY FOR MY APP
+
+            Intent instagramIntent = new Intent("com.instagram.share.ADD_TO_STORY");
+            instagramIntent.putExtra("source_application", "com.example.who_u");
+            instagramIntent.putExtra("top_background_color", "#8FA5F4");
+            instagramIntent.putExtra("bottom_background_color", "#9C1EE9");
             if(fileType.equals("image"))
                 instagramIntent.setType("image/*");
             else if(fileType.equals("video"))
                 instagramIntent.setType("video/*");
-            instagramIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-            instagramIntent.setPackage("com.instagram.android");
+            instagramIntent.putExtra("interactive_asset_uri", fileUri);
+            activity.grantUriPermission("com.instagram.android", fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
                 activity.startActivity(instagramIntent);
                 result.success("Success");
