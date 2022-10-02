@@ -134,7 +134,7 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
                 bottomColor = call.argument("bottomColor");
                 backgroundUrl = call.argument("backgroundUrl");
                 fileType = call.argument("fileType");
-                shareInstagramStory(msg, backgroundUrl, fileType, result);
+                shareInstagramStory(msg, topColor, bottomColor, backgroundUrl, fileType, result);
                 break;
             case _methodTelegramShare:
                 msg = call.argument("msg");
