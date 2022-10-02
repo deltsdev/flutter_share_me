@@ -360,8 +360,8 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
             //     activity.getApplicationContext().grantUriPermission(packageName, backgroundUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             // }
 
-            activity.getApplicationContext().grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            activity.getApplicationContext().grantUriPermission(packageName, backgroundUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.getApplicationContext().grantUriPermission(activity.getApplicationContext().getPackageName(), fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.getApplicationContext().grantUriPermission(activity.getApplicationContext().getPackageName(), backgroundUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             //WILL EDIT THIS SPECIFICALLY FOR MY APP
 
