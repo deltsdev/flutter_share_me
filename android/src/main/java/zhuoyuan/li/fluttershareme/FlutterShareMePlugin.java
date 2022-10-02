@@ -353,12 +353,15 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
             Uri fileUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".provider", file);
             Uri backgroundUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".provider", backgroundFile);
 
-            List<ResolveInfo> resInfoList = activity.getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-            for (ResolveInfo resolveInfo : resInfoList) {
-                String packageName = resolveInfo.activityInfo.packageName;
-                activity.getApplicationContext().grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                activity.getApplicationContext().grantUriPermission(packageName, backgroundUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            }
+            // List<ResolveInfo> resInfoList = activity.getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            // for (ResolveInfo resolveInfo : resInfoList) {
+            //     String packageName = resolveInfo.activityInfo.packageName;
+            //     activity.getApplicationContext().grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //     activity.getApplicationContext().grantUriPermission(packageName, backgroundUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            // }
+
+            activity.getApplicationContext().grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.getApplicationContext().grantUriPermission(packageName, backgroundUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             //WILL EDIT THIS SPECIFICALLY FOR MY APP
 
